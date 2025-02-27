@@ -1,22 +1,62 @@
 # ProgIIIG1-Act02-Samuel_Zuleta-Miguel_Gallego-Santiago_Giraldo
 
 
+# Hechos
 
-
-
+conexion(vancouver, edmonton, 16).
+conexion(vancouver, calgary, 13).
+conexion(edmonton, saskatoon, 12).
+conexion(saskatoon, winnipeg, 20).
+conexion(saskatoon, calgary, 9).
+conexion(calgary, regina, 14).
+conexion(calgary, edmonton, 4).
+conexion(regina, winnipeg, 4).
+conexion(regina, saskatoon, 7).
 
 
 # Reglas
 
-nodos_conectados(X, Nodos, Costo) :- conexion_entre(X, Nodos, Costo).
+% Verificar si hay conexión directa entre dos ciudades.
+hay_conexion_directa(Ciudad1, Ciudad2) :- 
+    conexion(Ciudad1, Ciudad2, _).
 
-tiene_aristas(X):- conexion_entre(X, _, _).
+% Obtener todas las conexiones de una ciudad.
+conexiones_de(Ciudad, ConexionesDesde, ConexionesHacia) :-
+    findall([Ciudad, Destino, Costo], conexion(Ciudad, Destino, Costo), ConexionesDesde),
+    findall([Origen, Ciudad, Costo], conexion(Origen, Ciudad, Costo), ConexionesHacia).
 
-costo_de(X, Y, Costo):-conexion_entre(X, Y, C1).
+% Encontrar un camino entre dos ciudades (incluyendo intermedias).
+camino(Inicio, Fin, Camino, Costo) :-
+    camino(Inicio, Fin, [Inicio], Camino, 0, Costo).
 
-costo_de(X, Y, Costo):- conexion_entre(X, Z, C1), costo_de(Z, Y, C2), Costo is C1+C2.
+camino(Fin, Fin, _, [Fin], Costo, Costo).
+camino(Actual, Fin, Visitados, [Actual|Camino], CostoActual, CostoTotal) :-
+    conexion(Actual, Siguiente, CostoArista),
+    \+ member(Siguiente, Visitados),
+    NuevoCosto is CostoActual + CostoArista,
+    camino(Siguiente, Fin, [Siguiente|Visitados], Camino, NuevoCosto, CostoTotal).
 
-posible_viajar(X, Y):- conexion_entre(X, Y, _).
+% Determinar si un nodo tiene aristas (salientes o entrantes).
+tiene_aristas(Nodo) :-
+    conexion(Nodo, _, _).  % Nodo con al menos una arista saliente
 
-posible_viajar(X, Y):- conexion_entre(X, Z, _), posible_viajar(Z,Y).
+tiene_aristas(Nodo) :-
+    conexion(_, Nodo, _).  % Nodo con al menos una arista entrante
+
+% Determinar el costo de viajar de X a Z pasando por Y.
+costo_via(X, Y, Z, CostoTotal) :-
+    conexion(X, Y, Costo1),
+    conexion(Y, Z, Costo2),
+    CostoTotal is Costo1 + Costo2.
+
+% Verificar si es posible viajar de una ciudad a otra.
+puede_viajar(Inicio, Fin, Camino, Costo) :-
+    camino(Inicio, Fin, Camino, Costo).
+
+% Determinar si existe un camino entre dos ciudades.
+existe_camino(Inicio, Fin) :-
+    puede_viajar(Inicio, Fin, _, _), !.
+existe_camino(_, _) :- 
+    false.
+
 
