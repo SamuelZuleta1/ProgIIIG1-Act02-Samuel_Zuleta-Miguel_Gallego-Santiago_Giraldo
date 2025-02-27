@@ -91,3 +91,49 @@ existe_camino(Inicio, Fin) :-
 existe_camino(_, _) :- 
 
     false.
+
+# Ejecución del programa
+
+Query: 
+
+hay_conexion_directa(NOMBRE CIUDAD 1, NOMBRE CIUDAD 2).
+
+![image](https://github.com/user-attachments/assets/d567b13b-edf7-4d1b-8e45-a78659e25111)
+
+Query:
+
+conexiones_de(NOMBRE DE LA CiUDAD, ConexionesDesde, ConexionesHacia).
+
+![image](https://github.com/user-attachments/assets/efedf123-4f00-4c9a-be28-9faefc601809)
+
+Query:
+
+camino(NOMBRE CIUDAD 1, NOMBRE CIUDAD 2, Camino, Costo)
+
+![image](https://github.com/user-attachments/assets/a0c50d7e-f68f-4c91-94de-0d3cb88a30b2)
+
+Si devuelve False, no hay camino entre esas dos ciudades.
+
+Query:
+
+tiene_aristas(Nodo)
+
+![image](https://github.com/user-attachments/assets/45dfc733-7dcd-4282-bd9e-1ade7f9997d7)
+
+Query:
+
+costo_via(X, Y, Z, CostoTotal).
+
+![image](https://github.com/user-attachments/assets/5b82eaf3-6dc3-4f96-9aa0-ea9f86b2683b)
+
+
+Query:
+
+puede_viajar(Inicio, Fin, Camino, Costo).
+
+![image](https://github.com/user-attachments/assets/3e321c89-423c-4c22-928a-419317af2599)
+
+
+
+
+
