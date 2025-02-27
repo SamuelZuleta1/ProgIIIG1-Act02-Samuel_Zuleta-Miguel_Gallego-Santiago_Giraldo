@@ -120,6 +120,8 @@ tiene_aristas(Nodo)
 
 ![image](https://github.com/user-attachments/assets/45dfc733-7dcd-4282-bd9e-1ade7f9997d7)
 
+![image](https://github.com/user-attachments/assets/6886e727-822f-4bbf-b3f2-913059362ae7)
+
 Query:
 
 costo_via(X, Y, Z, CostoTotal).
